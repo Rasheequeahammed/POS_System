@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../redux/slices/authSlice';
+import benzyLogo from '../images/logo/benzy_logo.png';
 import '../styles/Navbar.css';
 
 function Navbar() {
@@ -155,6 +156,7 @@ function Navbar() {
   return (
     <nav className="navbar">
       <div className="navbar-brand">
+        <img src={benzyLogo} alt="Benzy Logo" className="navbar-logo" />
         <h1>Benzy POS</h1>
       </div>
       

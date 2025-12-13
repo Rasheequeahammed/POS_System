@@ -30,6 +30,17 @@
   z-index: 1;
 }
 
+.login-logo {
+  margin-bottom: 20px;
+}
+
+.login-logo img {
+  height: 80px;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+}
+
 .login-box h1 {
   color: #1e3c72;
   margin-bottom: 8px;

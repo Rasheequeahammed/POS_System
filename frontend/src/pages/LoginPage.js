@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../redux/slices/authSlice';
+import benzyLogo from '../images/logo/benzy_logo.png';
 import '../styles/LoginPage.css';
 
 function LoginPage() {
@@ -19,6 +20,9 @@ function LoginPage() {
   return (
     <div className="login-container">
       <div className="login-box">
+        <div className="login-logo">
+          <img src={benzyLogo} alt="Benzy Logo" />
+        </div>
         <h1>Benzy Duty Free Shop</h1>
         <h2>Point of Sale System</h2>
         
