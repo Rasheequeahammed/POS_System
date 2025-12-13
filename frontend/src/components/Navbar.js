@@ -157,7 +157,7 @@ function Navbar() {
     <nav className="navbar">
       <div className="navbar-brand">
         <img src={benzyLogo} alt="Benzy Logo" className="navbar-logo" />
-        <h1>Benzy POS</h1>
+        <h1>POS</h1>
       </div>
       
       <div className="navbar-links">
