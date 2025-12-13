@@ -24,6 +24,12 @@ function Navbar() {
           to="/" 
           className={location.pathname === '/' ? 'active' : ''}
         >
+          Dashboard
+        </Link>
+        <Link 
+          to="/pos" 
+          className={location.pathname === '/pos' ? 'active' : ''}
+        >
           POS
         </Link>
         <Link 

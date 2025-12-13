@@ -1,0 +1,88 @@
+.recent-sales-card {
+  height: 100%;
+}
+
+.sales-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.sales-header h2 {
+  font-size: 1.25rem;
+  color: #1F2937;
+  margin: 0;
+}
+
+.sales-loading,
+.sales-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  color: #6B7280;
+  font-size: 0.875rem;
+}
+
+.sales-table-container {
+  overflow-x: auto;
+}
+
+.sales-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.sales-table thead {
+  background: #F9FAFB;
+}
+
+.sales-table th {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #6B7280;
+  border-bottom: 2px solid #E5E7EB;
+}
+
+.sales-table td {
+  padding: 1rem;
+  font-size: 0.875rem;
+  color: #1F2937;
+  border-bottom: 1px solid #E5E7EB;
+}
+
+.sales-table tbody tr:hover {
+  background: #F9FAFB;
+}
+
+.payment-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.payment-badge.cash {
+  background: #D1FAE5;
+  color: #065F46;
+}
+
+.payment-badge.card {
+  background: #DBEAFE;
+  color: #1E40AF;
+}
+
+.payment-badge.upi {
+  background: #FEE2E2;
+  color: #991B1B;
+}
+
+.amount {
+  font-weight: 600;
+  color: #059669;
+  font-size: 1rem;
+}
