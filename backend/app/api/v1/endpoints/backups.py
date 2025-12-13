@@ -117,7 +117,7 @@ def get_backups(
     current_user: User = Depends(get_current_user)
 ):
     """Get all backups"""
-    if current_user.role != "ADMIN":
+    if current_user.role.upper() != "ADMIN":
         raise HTTPException(status_code=403, detail="Only admins can view backups")
     
     backups = db.query(Backup).order_by(desc(Backup.created_at)).offset(skip).limit(limit).all()
@@ -131,7 +131,7 @@ async def create_backup(
     current_user: User = Depends(get_current_user)
 ):
     """Create a new database backup"""
-    if current_user.role != "ADMIN":
+    if current_user.role.upper() != "ADMIN":
         raise HTTPException(status_code=403, detail="Only admins can create backups")
     
     # Create backup record
@@ -167,7 +167,7 @@ async def restore_backup(
     current_user: User = Depends(get_current_user)
 ):
     """Restore database from backup"""
-    if current_user.role != "ADMIN":
+    if current_user.role.upper() != "ADMIN":
         raise HTTPException(status_code=403, detail="Only admins can restore backups")
     
     backup = db.query(Backup).filter(Backup.id == backup_id).first()
@@ -227,7 +227,7 @@ def delete_backup(
     current_user: User = Depends(get_current_user)
 ):
     """Delete a backup"""
-    if current_user.role != "ADMIN":
+    if current_user.role.upper() != "ADMIN":
         raise HTTPException(status_code=403, detail="Only admins can delete backups")
     
     backup = db.query(Backup).filter(Backup.id == backup_id).first()
@@ -251,7 +251,7 @@ def get_backup_stats(
     current_user: User = Depends(get_current_user)
 ):
     """Get backup statistics"""
-    if current_user.role != "ADMIN":
+    if current_user.role.upper() != "ADMIN":
         raise HTTPException(status_code=403, detail="Only admins can view backup stats")
     
     backups = db.query(Backup).filter(Backup.status == "completed").all()
@@ -274,7 +274,7 @@ async def download_backup(
     current_user: User = Depends(get_current_user)
 ):
     """Download a backup file"""
-    if current_user.role != "ADMIN":
+    if current_user.role.upper() != "ADMIN":
         raise HTTPException(status_code=403, detail="Only admins can download backups")
     
     backup = db.query(Backup).filter(Backup.id == backup_id).first()
