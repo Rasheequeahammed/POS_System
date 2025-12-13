@@ -7,7 +7,7 @@ from app.database.session import get_db
 from app.models.sale import Sale, SaleItem
 from app.models.product import Product
 from app.models.customer import Customer
-from app.core.security import get_current_user
+from app.api.v1.endpoints.auth import get_current_user
 from app.models.user import User
 
 router = APIRouter()
