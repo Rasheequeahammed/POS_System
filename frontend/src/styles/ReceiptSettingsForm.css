@@ -1,0 +1,213 @@
+.receipt-settings-form h3 {
+  font-size: 1.5rem;
+  color: #1F2937;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid #E5E7EB;
+}
+
+.settings-section {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: #F9FAFB;
+  border-radius: 12px;
+}
+
+.settings-section h4 {
+  font-size: 1.125rem;
+  color: #374151;
+  margin-bottom: 1rem;
+}
+
+.checkbox-group {
+  margin-bottom: 1rem;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  padding: 0.75rem;
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+
+.checkbox-label:hover {
+  background: white;
+}
+
+.checkbox-label input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #4F46E5;
+}
+
+.checkbox-label span {
+  font-weight: 500;
+  color: #374151;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  font-weight: 600;
+  color: #374151;
+  font-size: 0.875rem;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  padding: 0.75rem;
+  border: 2px solid #E5E7EB;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #4F46E5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+.form-group textarea {
+  resize: vertical;
+  font-family: inherit;
+}
+
+.help-text {
+  font-size: 0.875rem;
+  color: #6B7280;
+  font-style: italic;
+}
+
+.receipt-preview {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: #F9FAFB;
+  border-radius: 12px;
+}
+
+.receipt-preview h4 {
+  font-size: 1.125rem;
+  color: #374151;
+  margin-bottom: 1rem;
+}
+
+.preview-container {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.preview-receipt {
+  background: white;
+  border: 2px solid #E5E7EB;
+  border-radius: 8px;
+  padding: 2rem;
+  max-width: 400px;
+  width: 100%;
+  font-family: 'Courier New', monospace;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.preview-logo {
+  text-align: center;
+  color: #9CA3AF;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.preview-store-name {
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.preview-header {
+  text-align: center;
+  font-size: 0.875rem;
+  color: #6B7280;
+  margin-bottom: 1rem;
+}
+
+.preview-divider {
+  text-align: center;
+  color: #D1D5DB;
+  margin: 0.75rem 0;
+}
+
+.preview-items {
+  margin: 1rem 0;
+}
+
+.preview-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.preview-barcode {
+  font-size: 0.75rem;
+  color: #6B7280;
+  margin-left: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.preview-total {
+  margin: 1rem 0;
+  font-size: 0.875rem;
+}
+
+.preview-total > div {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.25rem;
+}
+
+.preview-grand-total {
+  font-weight: bold;
+  font-size: 1rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid #E5E7EB;
+  margin-top: 0.5rem;
+}
+
+.preview-terms {
+  font-size: 0.75rem;
+  color: #6B7280;
+  text-align: center;
+  margin: 1rem 0;
+  line-height: 1.4;
+}
+
+.preview-footer {
+  text-align: center;
+  font-weight: bold;
+  font-size: 0.875rem;
+  margin-top: 1rem;
+  color: #374151;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .preview-container {
+    padding: 1rem;
+  }
+
+  .preview-receipt {
+    padding: 1.5rem;
+  }
+}
