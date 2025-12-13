@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from app.api.v1.endpoints import auth, products, sales, users, customers, suppliers, analytics, inventory, reports
+from app.api.v1.endpoints import auth, products, sales, users, customers, suppliers, analytics, inventory, reports, stores, transfers
 
 api_router = APIRouter()
 
@@ -12,3 +12,5 @@ api_router.include_router(suppliers.router, prefix="/suppliers", tags=["Supplier
 api_router.include_router(analytics.router, prefix="/analytics", tags=["Analytics"])
 api_router.include_router(inventory.router, prefix="/inventory", tags=["Inventory"])
 api_router.include_router(reports.router, prefix="/reports", tags=["Reports"])
+api_router.include_router(stores.router, prefix="/stores", tags=["Stores"])
+api_router.include_router(transfers.router, prefix="/transfers", tags=["Inventory Transfers"])

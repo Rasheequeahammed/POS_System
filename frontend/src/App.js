@@ -13,6 +13,8 @@ import AnalyticsPage from './pages/AnalyticsPage';
 import ReportsPage from './pages/ReportsPage';
 import UserManagementPage from './pages/UserManagementPage';
 import ActivityLogsPage from './pages/ActivityLogsPage';
+import StoreManagementPage from './pages/StoreManagementPage';
+import InventoryTransferPage from './pages/InventoryTransferPage';
 import SettingsPage from './pages/SettingsPage';
 import Layout from './components/Layout';
 import { checkAuth } from './redux/slices/authSlice';
@@ -59,6 +61,8 @@ function App() {
         <Route path="reports" element={<ReportsPage />} />
         <Route path="users" element={<UserManagementPage />} />
         <Route path="activity-logs" element={<ActivityLogsPage />} />
+        <Route path="stores" element={<StoreManagementPage />} />
+        <Route path="inventory-transfers" element={<InventoryTransferPage />} />
         <Route path="settings" element={<SettingsPage />} />
       </Route>
     </Routes>

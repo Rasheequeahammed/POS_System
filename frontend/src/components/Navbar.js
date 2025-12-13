@@ -82,6 +82,14 @@ function Navbar() {
             Users
           </Link>
         )}
+        {(user?.role?.toUpperCase() === 'ADMIN' || user?.role?.toUpperCase() === 'MANAGER') && (
+          <Link 
+            to="/stores" 
+            className={location.pathname === '/stores' || location.pathname === '/inventory-transfers' ? 'active' : ''}
+          >
+            Stores
+          </Link>
+        )}
         <Link 
           to="/settings" 
           className={location.pathname === '/settings' ? 'active' : ''}
