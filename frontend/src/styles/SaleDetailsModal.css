@@ -1,0 +1,139 @@
+/* Sale Details Modal */
+.sale-details-modal {
+  width: 90%;
+  max-width: 900px;
+}
+
+.sale-info {
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  margin-bottom: 24px;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.info-row:last-child {
+  border-bottom: none;
+}
+
+.info-row .label {
+  font-weight: 600;
+  color: #7f8c8d;
+}
+
+.info-row .value {
+  color: #2c3e50;
+  font-weight: 500;
+}
+
+.items-section {
+  margin-bottom: 24px;
+}
+
+.items-section h3 {
+  margin: 0 0 16px 0;
+  color: #2c3e50;
+  font-size: 18px;
+}
+
+.items-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.items-table thead {
+  background-color: #f8f9fa;
+}
+
+.items-table th {
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+  color: #2c3e50;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.items-table td {
+  padding: 12px;
+  border-bottom: 1px solid #f0f0f0;
+  color: #2c3e50;
+}
+
+.items-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.totals-section {
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 24px;
+}
+
+.total-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  font-size: 15px;
+  color: #2c3e50;
+}
+
+.total-row.grand-total {
+  border-top: 2px solid #667eea;
+  margin-top: 12px;
+  padding-top: 16px;
+  font-size: 20px;
+  font-weight: 700;
+  color: #667eea;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding-top: 20px;
+  border-top: 2px solid #f0f0f0;
+}
+
+/* Print Styles */
+@media print {
+  .modal-overlay {
+    background: white;
+  }
+
+  .modal-header button,
+  .modal-actions {
+    display: none;
+  }
+
+  .sale-details-modal {
+    box-shadow: none;
+    max-width: 100%;
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .sale-details-modal {
+    width: 95%;
+  }
+
+  .items-table {
+    font-size: 13px;
+  }
+
+  .items-table th,
+  .items-table td {
+    padding: 8px;
+  }
+
+  .total-row.grand-total {
+    font-size: 18px;
+  }
+}
