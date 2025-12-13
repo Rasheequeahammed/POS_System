@@ -13,7 +13,7 @@ from app.api.v1.endpoints.auth import get_current_user
 router = APIRouter()
 
 
-@router.get("/inventory")
+@router.get("/")
 def get_inventory(
     skip: int = 0,
     limit: int = 100,
@@ -75,7 +75,7 @@ def get_inventory(
     }
 
 
-@router.get("/inventory/low-stock-alerts")
+@router.get("/low-stock-alerts")
 def get_low_stock_alerts(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
@@ -113,7 +113,7 @@ def get_low_stock_alerts(
     }
 
 
-@router.get("/inventory/summary")
+@router.get("/summary")
 def get_inventory_summary(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
@@ -180,7 +180,7 @@ def get_inventory_summary(
     }
 
 
-@router.post("/inventory/adjust-stock/{product_id}")
+@router.post("/adjust-stock/{product_id}")
 def adjust_stock(
     product_id: int,
     adjustment_type: str,
@@ -248,7 +248,7 @@ def adjust_stock(
     }
 
 
-@router.put("/inventory/reorder-point/{product_id}")
+@router.put("/reorder-point/{product_id}")
 def update_reorder_point(
     product_id: int,
     minimum_stock: int,
@@ -279,7 +279,7 @@ def update_reorder_point(
     }
 
 
-@router.get("/inventory/adjustments")
+@router.get("/adjustments")
 def get_stock_adjustments(
     skip: int = 0,
     limit: int = 50,
@@ -340,7 +340,7 @@ def get_stock_adjustments(
     }
 
 
-@router.get("/inventory/categories")
+@router.get("/categories")
 def get_categories(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),

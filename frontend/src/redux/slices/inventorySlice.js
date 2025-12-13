@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import api from '../../services/api';
+import api from '../../utils/api';
 
 // Async thunks
 export const fetchInventory = createAsyncThunk(
@@ -12,7 +12,7 @@ export const fetchInventory = createAsyncThunk(
     if (search) params.append('search', search);
     if (lowStockOnly) params.append('low_stock_only', 'true');
     
-    const response = await api.get(`/inventory/inventory?${params}`);
+    const response = await api.get(`/inventory?${params}`);
     return response.data;
   }
 );
