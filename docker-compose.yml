@@ -29,18 +29,25 @@ services:
       DATABASE_URL: postgresql://benzy_admin:benzy_secure_2025@postgres:5432/benzy_retail_db
       SECRET_KEY: your-secret-key-change-in-production
       ENVIRONMENT: development
+      # Database credentials for pg_dump/psql
+      POSTGRES_SERVER: postgres
+      POSTGRES_DB: benzy_retail_db
+      POSTGRES_USER: benzy_admin
+      POSTGRES_PASSWORD: benzy_secure_2025
     ports:
       - "8000:8000"
     depends_on:
       - postgres
     volumes:
       - ./backend:/app
+      - backup_data:/app/backups
     networks:
       - benzy_network
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 
 volumes:
   postgres_data:
+  backup_data:
 
 networks:
   benzy_network:
