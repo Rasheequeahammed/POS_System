@@ -187,6 +187,64 @@
   }
 }
 
+/* Backup Redirect Card */
+.backup-redirect-card {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 3rem 2rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 16px;
+  color: white;
+  text-align: center;
+  box-shadow: 0 10px 40px rgba(102, 126, 234, 0.3);
+}
+
+.backup-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+.backup-redirect-card h3 {
+  font-size: 1.75rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.backup-redirect-card p {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  opacity: 0.95;
+}
+
+.backup-redirect-card .primary-button {
+  background: white;
+  color: #667eea;
+  padding: 0.875rem 2rem;
+  border-radius: 8px;
+  border: none;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.backup-redirect-card .primary-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
 @media (max-width: 768px) {
   .settings-page {
     padding: 1rem;
@@ -207,5 +265,21 @@
 
   .tab-icon {
     font-size: 1.25rem;
+  }
+
+  .backup-redirect-card {
+    padding: 2rem 1.5rem;
+  }
+
+  .backup-icon {
+    font-size: 3rem;
+  }
+
+  .backup-redirect-card h3 {
+    font-size: 1.5rem;
+  }
+
+  .backup-redirect-card p {
+    font-size: 0.9rem;
   }
 }

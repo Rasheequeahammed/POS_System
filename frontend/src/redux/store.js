@@ -13,6 +13,7 @@ import inventoryReducer from './slices/inventorySlice';
 import reportsReducer from './slices/reportsSlice';
 import userManagementReducer from './slices/userManagementSlice';
 import storesReducer from './slices/storesSlice';
+import backupsReducer from './slices/backupsSlice';
 
 const store = configureStore({
   reducer: {
@@ -30,6 +31,7 @@ const store = configureStore({
     reports: reportsReducer,
     userManagement: userManagementReducer,
     stores: storesReducer,
+    backups: backupsReducer,
   },
 });
 

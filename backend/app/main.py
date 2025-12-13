@@ -6,7 +6,7 @@ from app.database.session import engine
 from app.database.base import Base
 
 # Import all models to register them with Base
-from app.models import user, product, supplier, customer, sale, purchase, activity_log, store, inventory_transfer
+from app.models import user, product, supplier, customer, sale, purchase, activity_log, store, inventory_transfer, backup
 
 # Create database tables
 Base.metadata.create_all(bind=engine)
