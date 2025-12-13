@@ -9,6 +9,7 @@ import purchasesReducer from './slices/purchasesSlice';
 import suppliersReducer from './slices/suppliersSlice';
 import settingsReducer from './slices/settingsSlice';
 import analyticsReducer from './slices/analyticsSlice';
+import inventoryReducer from './slices/inventorySlice';
 
 const store = configureStore({
   reducer: {
@@ -22,6 +23,7 @@ const store = configureStore({
     suppliers: suppliersReducer,
     settings: settingsReducer,
     analytics: analyticsReducer,
+    inventory: inventoryReducer,
   },
 });
 

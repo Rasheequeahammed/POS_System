@@ -54,7 +54,13 @@ function Navbar() {
           to="/inventory" 
           className={location.pathname === '/inventory' ? 'active' : ''}
         >
-          Inventory
+          Purchases
+        </Link>
+        <Link 
+          to="/stock" 
+          className={location.pathname === '/stock' ? 'active' : ''}
+        >
+          Stock
         </Link>
         <Link 
           to="/analytics" 
