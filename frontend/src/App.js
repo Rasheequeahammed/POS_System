@@ -5,6 +5,7 @@ import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
 import POSPage from './pages/POSPage';
 import ProductsPage from './pages/ProductsPage';
+import CustomersPage from './pages/CustomersPage';
 import ReportsPage from './pages/ReportsPage';
 import SettingsPage from './pages/SettingsPage';
 import Layout from './components/Layout';
@@ -44,6 +45,7 @@ function App() {
         <Route index element={<DashboardPage />} />
         <Route path="pos" element={<POSPage />} />
         <Route path="products" element={<ProductsPage />} />
+        <Route path="customers" element={<CustomersPage />} />
         <Route path="reports" element={<ReportsPage />} />
         <Route path="settings" element={<SettingsPage />} />
       </Route>
