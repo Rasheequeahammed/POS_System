@@ -172,7 +172,7 @@ function InventoryPage() {
                             </span>
                           </td>
                           <td>{product.minimum_stock}</td>
-                          <td>₹{parseFloat(product.unit_price).toFixed(2)}</td>
+                          <td>₹{parseFloat(product.selling_price || product.price || 0).toFixed(2)}</td>
                           <td>
                             {product.current_stock <= product.minimum_stock ? (
                               <span className="status-badge low-stock">Low Stock</span>
