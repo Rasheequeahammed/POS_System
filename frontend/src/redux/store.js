@@ -11,6 +11,7 @@ import settingsReducer from './slices/settingsSlice';
 import analyticsReducer from './slices/analyticsSlice';
 import inventoryReducer from './slices/inventorySlice';
 import reportsReducer from './slices/reportsSlice';
+import userManagementReducer from './slices/userManagementSlice';
 
 const store = configureStore({
   reducer: {
@@ -26,6 +27,7 @@ const store = configureStore({
     analytics: analyticsReducer,
     inventory: inventoryReducer,
     reports: reportsReducer,
+    userManagement: userManagementReducer,
   },
 });
 
