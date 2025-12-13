@@ -57,6 +57,12 @@ function Navbar() {
           Inventory
         </Link>
         <Link 
+          to="/analytics" 
+          className={location.pathname === '/analytics' ? 'active' : ''}
+        >
+          Analytics
+        </Link>
+        <Link 
           to="/reports" 
           className={location.pathname === '/reports' ? 'active' : ''}
         >

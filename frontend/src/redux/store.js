@@ -8,6 +8,7 @@ import customersReducer from './slices/customersSlice';
 import purchasesReducer from './slices/purchasesSlice';
 import suppliersReducer from './slices/suppliersSlice';
 import settingsReducer from './slices/settingsSlice';
+import analyticsReducer from './slices/analyticsSlice';
 
 const store = configureStore({
   reducer: {
@@ -20,6 +21,7 @@ const store = configureStore({
     purchases: purchasesReducer,
     suppliers: suppliersReducer,
     settings: settingsReducer,
+    analytics: analyticsReducer,
   },
 });
 
