@@ -99,7 +99,7 @@ def get_profit_analysis(
             Product.name.label("product_name"),
             Product.category,
             func.sum(SaleItem.quantity).label("quantity"),
-            func.sum(SaleItem.subtotal).label("revenue"),
+            func.sum(SaleItem.line_total).label("revenue"),
             func.sum(SaleItem.quantity * Product.cost_price).label("cost"),
         )
         .join(Sale, SaleItem.sale_id == Sale.id)
@@ -184,13 +184,13 @@ def get_top_products(
             Product.category,
             Product.barcode,
             func.sum(SaleItem.quantity).label("quantity_sold"),
-            func.sum(SaleItem.subtotal).label("revenue"),
+            func.sum(SaleItem.line_total).label("revenue"),
         )
         .join(SaleItem, Product.id == SaleItem.product_id)
         .join(Sale, SaleItem.sale_id == Sale.id)
         .filter(Sale.sale_date >= start, Sale.sale_date <= end)
         .group_by(Product.id, Product.name, Product.category, Product.barcode)
-        .order_by(desc(func.sum(SaleItem.subtotal)))
+        .order_by(desc(func.sum(SaleItem.line_total)))
         .limit(limit)
         .all()
     )
@@ -295,14 +295,14 @@ def get_revenue_by_category(
     category_revenue = (
         db.query(
             Product.category,
-            func.sum(SaleItem.subtotal).label("revenue"),
+            func.sum(SaleItem.line_total).label("revenue"),
             func.sum(SaleItem.quantity).label("quantity"),
         )
         .join(SaleItem, Product.id == SaleItem.product_id)
         .join(Sale, SaleItem.sale_id == Sale.id)
         .filter(Sale.sale_date >= start, Sale.sale_date <= end)
         .group_by(Product.category)
-        .order_by(desc(func.sum(SaleItem.subtotal)))
+        .order_by(desc(func.sum(SaleItem.line_total)))
         .all()
     )
 
