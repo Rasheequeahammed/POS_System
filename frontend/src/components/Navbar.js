@@ -74,7 +74,7 @@ function Navbar() {
         >
           Reports
         </Link>
-        {(user?.role === 'ADMIN' || user?.role === 'MANAGER') && (
+        {(user?.role?.toUpperCase() === 'ADMIN' || user?.role?.toUpperCase() === 'MANAGER') && (
           <Link 
             to="/users" 
             className={location.pathname === '/users' || location.pathname === '/activity-logs' ? 'active' : ''}
