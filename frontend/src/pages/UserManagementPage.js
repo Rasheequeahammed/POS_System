@@ -87,7 +87,7 @@ const UserManagementPage = () => {
   };
 
   const getRoleColor = (role) => {
-    switch (role) {
+    switch (role?.toUpperCase()) {
       case 'ADMIN':
         return 'error';
       case 'MANAGER':
@@ -97,7 +97,7 @@ const UserManagementPage = () => {
       default:
         return 'default';
     }
-  };
+  };  
 
   const filteredUsers = filterRole
     ? users.filter((user) => user.role === filterRole)
@@ -105,8 +105,10 @@ const UserManagementPage = () => {
 
   const canManageUser = (user) => {
     if (!currentUser) return false;
-    if (currentUser.role === 'ADMIN') return true;
-    if (currentUser.role === 'MANAGER' && user.role === 'CASHIER') return true;
+    const currentRole = currentUser.role?.toUpperCase();
+    const targetRole = user.role?.toUpperCase();
+    if (currentRole === 'ADMIN') return true;
+    if (currentRole === 'MANAGER' && targetRole === 'CASHIER') return true;
     return false;
   };
 
