@@ -90,16 +90,27 @@ const ProductForm = ({ product, onClose }) => {
         gst_rate: parseFloat(formData.gst_rate),
       };
 
-      if (product) {
-        await dispatch(updateProduct({ id: product.id, data: productData }));
-      } else {
-        await dispatch(createProduct(productData));
-      }
+      const result = product
+        ? await dispatch(updateProduct({ id: product.id, data: productData })).unwrap()
+        : await dispatch(createProduct(productData)).unwrap();
       
+      alert('Product saved successfully!');
       onClose();
     } catch (error) {
       console.error('Error saving product:', error);
-      alert('Failed to save product. Please try again.');
+      
+      // Show alert for all errors
+      if (error.message && error.message.toLowerCase().includes('barcode')) {
+        alert('Barcode already exists! Please use a different barcode.');
+      } else if (error.response?.data?.detail) {
+        alert(error.response.data.detail);
+      } else if (error.message) {
+        alert(error.message);
+      } else if (typeof error === 'string') {
+        alert(error);
+      } else {
+        alert('Failed to save product. Please try again.');
+      }
     } finally {
       setSubmitting(false);
     }

@@ -45,12 +45,13 @@ const ProductsPage = () => {
   );
 
   if (loading) return <div className="loading">Loading products...</div>;
-  if (error) return <div className="error">Error: {error}</div>;
 
   return (
     <div className="products-page">
       <div className="products-header">
-        <h1>Product Management</h1>
+        <div>
+          <h1>Product Management</h1>
+        </div>
         <button className="btn-primary" onClick={handleAdd}>
           + Add New Product
         </button>
