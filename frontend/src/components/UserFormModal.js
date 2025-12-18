@@ -122,7 +122,14 @@ const UserFormModal = ({ open, onClose, user }) => {
       dispatch(fetchUsers());
       onClose();
     } catch (err) {
-      setFormError(err.message || 'An error occurred');
+      // Display alert popup for errors
+      if (err.message && err.message.toLowerCase().includes('username')) {
+        alert('Error: Username already exists. Please choose a different username.');
+      } else if (err.message && err.message.toLowerCase().includes('email')) {
+        alert('Error: Email already exists. Please use a different email.');
+      } else {
+        alert(err.message || 'An error occurred while saving the user.');
+      }
     }
   };
 
