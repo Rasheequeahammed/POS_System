@@ -15,8 +15,9 @@ from pathlib import Path
 router = APIRouter()
 
 # Configuration
-BACKUP_DIR = Path("/app/backups")  # Inside Docker container
-BACKUP_DIR.mkdir(exist_ok=True)
+# Use relative path from backend directory for local development
+BACKUP_DIR = Path(__file__).parent.parent.parent.parent / "backups"
+BACKUP_DIR.mkdir(exist_ok=True, parents=True)
 
 # Pydantic schemas
 class BackupCreate(BaseModel):

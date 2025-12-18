@@ -19,7 +19,6 @@ def create_admin():
             full_name="System Administrator",
             hashed_password=get_password_hash("admin123"),
             is_active=True,
-            is_superuser=True,
             role="admin"
         )
         db.add(admin)

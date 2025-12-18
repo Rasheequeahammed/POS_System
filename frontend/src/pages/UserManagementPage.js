@@ -61,8 +61,12 @@ const UserManagementPage = () => {
   }, [error, dispatch]);
 
   const handleAddUser = () => {
+    console.log('Add User button clicked');
+    console.log('Current user:', currentUser);
+    console.log('Current user role:', currentUser?.role);
     setEditingUser(null);
     setOpenModal(true);
+    console.log('Modal should be open:', true);
   };
 
   const handleEditUser = (user) => {
@@ -124,7 +128,7 @@ const UserManagementPage = () => {
             variant="contained"
             startIcon={<AddIcon />}
             onClick={handleAddUser}
-            disabled={currentUser?.role !== 'ADMIN' && currentUser?.role !== 'MANAGER'}
+            disabled={currentUser?.role?.toUpperCase() !== 'ADMIN' && currentUser?.role?.toUpperCase() !== 'MANAGER'}
           >
             Add User
           </Button>

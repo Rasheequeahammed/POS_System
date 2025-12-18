@@ -23,4 +23,4 @@ class User(Base):
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     
     # Relationships
-    sales = relationship("Sale", back_populates="user")
+    sales = relationship("Sale", back_populates="user", lazy="dynamic")

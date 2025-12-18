@@ -27,11 +27,15 @@ const UserFormModal = ({ open, onClose, user }) => {
   const { roles, loading } = useSelector((state) => state.userManagement);
   const currentUser = useSelector((state) => state.auth.user);
 
+  console.log('UserFormModal rendered - open:', open);
+  console.log('UserFormModal - user:', user);
+  console.log('UserFormModal - roles:', roles);
+
   const [formData, setFormData] = useState({
     username: '',
     email: '',
     full_name: '',
-    role: 'CASHIER',
+    role: 'cashier',
     password: '',
   });
   const [showPassword, setShowPassword] = useState(false);
@@ -51,7 +55,7 @@ const UserFormModal = ({ open, onClose, user }) => {
         username: '',
         email: '',
         full_name: '',
-        role: 'CASHIER',
+        role: 'cashier',
         password: '',
       });
     }
@@ -123,11 +127,20 @@ const UserFormModal = ({ open, onClose, user }) => {
   };
 
   const getAvailableRoles = () => {
-    if (currentUser?.role === 'ADMIN') {
-      return roles;
+    // Hardcoded roles as fallback
+    const defaultRoles = [
+      { value: 'admin', label: 'Admin', description: 'Full system access' },
+      { value: 'manager', label: 'Manager', description: 'Store management' },
+      { value: 'cashier', label: 'Cashier', description: 'POS operations' }
+    ];
+    
+    const availableRoles = roles && roles.length > 0 ? roles : defaultRoles;
+    
+    if (currentUser?.role?.toUpperCase() === 'ADMIN') {
+      return availableRoles;
     }
-    if (currentUser?.role === 'MANAGER') {
-      return roles.filter((role) => role.value === 'CASHIER');
+    if (currentUser?.role?.toUpperCase() === 'MANAGER') {
+      return availableRoles.filter((role) => role.value.toLowerCase() === 'cashier');
     }
     return [];
   };
