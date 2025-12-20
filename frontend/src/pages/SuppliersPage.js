@@ -19,6 +19,7 @@ function SuppliersPage() {
   const [showForm, setShowForm] = useState(false);
   const [editingSupplier, setEditingSupplier] = useState(null);
   const [viewingSupplierId, setViewingSupplierId] = useState(null);
+  const [successMessage, setSuccessMessage] = useState('');
 
   useEffect(() => {
     dispatch(fetchSuppliers());
@@ -32,6 +33,15 @@ function SuppliersPage() {
       return () => clearTimeout(timer);
     }
   }, [error, dispatch]);
+
+  useEffect(() => {
+    if (successMessage) {
+      const timer = setTimeout(() => {
+        setSuccessMessage('');
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [successMessage]);
 
   const filteredSuppliers = suppliers.filter((supplier) => {
     const search = searchTerm.toLowerCase();
@@ -55,16 +65,26 @@ function SuppliersPage() {
 
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this supplier?')) {
-      await dispatch(deleteSupplier(id));
-      dispatch(fetchSuppliers());
+      const result = await dispatch(deleteSupplier(id));
+      if (result.type === 'suppliers/deleteSupplier/fulfilled') {
+        setSuccessMessage('Supplier deleted successfully!');
+        dispatch(fetchSuppliers());
+      }
     }
   };
 
   const handleFormSubmit = async (formData) => {
+    let result;
     if (editingSupplier) {
-      await dispatch(updateSupplier({ id: editingSupplier.id, data: formData }));
+      result = await dispatch(updateSupplier({ id: editingSupplier.id, data: formData }));
+      if (result.type === 'suppliers/updateSupplier/fulfilled') {
+        setSuccessMessage('Supplier updated successfully!');
+      }
     } else {
-      await dispatch(createSupplier(formData));
+      result = await dispatch(createSupplier(formData));
+      if (result.type === 'suppliers/createSupplier/fulfilled') {
+        setSuccessMessage('Supplier created successfully!');
+      }
     }
     setShowForm(false);
     setEditingSupplier(null);
@@ -95,6 +115,7 @@ function SuppliersPage() {
       </div>
 
       {error && <div className="error-banner">{error}</div>}
+      {successMessage && <div className="success-banner">{successMessage}</div>}
 
       {showForm ? (
         <div className="form-container">
