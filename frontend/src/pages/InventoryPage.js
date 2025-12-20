@@ -17,6 +17,7 @@ function InventoryPage() {
   const [viewingPurchaseId, setViewingPurchaseId] = useState(null);
   const [activeTab, setActiveTab] = useState('stock'); // 'stock' or 'purchases'
   const [searchTerm, setSearchTerm] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
 
   useEffect(() => {
     dispatch(fetchProducts());
@@ -32,11 +33,23 @@ function InventoryPage() {
     }
   }, [error, dispatch]);
 
+  useEffect(() => {
+    if (successMessage) {
+      const timer = setTimeout(() => {
+        setSuccessMessage('');
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [successMessage]);
+
   const handleFormSubmit = async (formData) => {
-    await dispatch(createPurchase(formData));
-    setShowForm(false);
-    dispatch(fetchPurchases());
-    dispatch(fetchProducts());
+    const result = await dispatch(createPurchase(formData));
+    if (result.type === 'purchases/createPurchase/fulfilled') {
+      setSuccessMessage('Purchase order created successfully!');
+      setShowForm(false);
+      dispatch(fetchPurchases());
+      dispatch(fetchProducts());
+    }
   };
 
   const filteredProducts = products.filter((product) => {
@@ -65,6 +78,7 @@ function InventoryPage() {
       </div>
 
       {error && <div className="error-banner">{error}</div>}
+      {successMessage && <div className="success-banner">{successMessage}</div>}
 
       {showForm ? (
         <div className="form-container">

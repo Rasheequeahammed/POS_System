@@ -63,8 +63,17 @@ function StockAdjustmentModal({ product, onClose }) {
   };
 
   const handleQuantityChange = (value) => {
-    const quantity = parseInt(value) || '';
-    setFormData({ ...formData, quantityChange: quantity });
+    // Allow empty string for clearing the field
+    if (value === '') {
+      setFormData({ ...formData, quantityChange: '' });
+      return;
+    }
+    // Convert to number, keep as is if valid
+    const quantity = parseInt(value);
+    if (!isNaN(quantity)) {
+      // Always store as positive number, sign is determined by adjustment type
+      setFormData({ ...formData, quantityChange: Math.abs(quantity) });
+    }
   };
 
   const calculateNewStock = () => {

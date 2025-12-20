@@ -6,7 +6,7 @@ export const fetchPurchases = createAsyncThunk(
   'purchases/fetchPurchases',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await api.get('/purchases');
+      const response = await api.get('/purchases/');
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.detail || 'Failed to fetch purchases');
@@ -30,7 +30,7 @@ export const createPurchase = createAsyncThunk(
   'purchases/createPurchase',
   async (purchaseData, { rejectWithValue }) => {
     try {
-      const response = await api.post('/purchases', purchaseData);
+      const response = await api.post('/purchases/', purchaseData);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.detail || 'Failed to create purchase');

@@ -47,6 +47,15 @@
   margin-bottom: 1.5rem;
 }
 
+.success-banner {
+  background-color: #D1FAE5;
+  color: #059669;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+}
+
 .form-container {
   background: white;
   border-radius: 12px;

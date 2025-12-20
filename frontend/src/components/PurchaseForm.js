@@ -95,6 +95,7 @@ function PurchaseForm({ onSubmit, onCancel }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    
     if (validateForm()) {
       const submitData = {
         ...formData,
