@@ -60,14 +60,28 @@ function CustomersPage() {
   };
 
   const handleFormSubmit = async (formData) => {
-    if (editingCustomer) {
-      await dispatch(updateCustomer({ id: editingCustomer.id, data: formData }));
-    } else {
-      await dispatch(createCustomer(formData));
+    try {
+      if (editingCustomer) {
+        const result = await dispatch(updateCustomer({ id: editingCustomer.id, data: formData }));
+        if (result.error) {
+          alert('Error updating customer: ' + result.payload);
+          return;
+        }
+        alert('Customer updated successfully!');
+      } else {
+        const result = await dispatch(createCustomer(formData));
+        if (result.error) {
+          alert('Error creating customer: ' + result.payload);
+          return;
+        }
+        alert('Customer created successfully!');
+      }
+      setShowForm(false);
+      setEditingCustomer(null);
+      dispatch(fetchCustomers());
+    } catch (error) {
+      alert('Error: ' + error.message);
     }
-    setShowForm(false);
-    setEditingCustomer(null);
-    dispatch(fetchCustomers());
   };
 
   const handleFormCancel = () => {

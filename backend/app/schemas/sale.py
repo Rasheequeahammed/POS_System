@@ -3,6 +3,15 @@ from typing import Optional, List
 from datetime import datetime
 from app.models.sale import PaymentMethod
 
+# Customer minimal info for sales
+class CustomerInfo(BaseModel):
+    id: int
+    name: str
+    phone: str
+    
+    class Config:
+        from_attributes = True
+
 # Sale Item Schemas
 class SaleItemBase(BaseModel):
     product_id: int
@@ -40,6 +49,7 @@ class SaleBase(BaseModel):
 
 class SaleCreate(SaleBase):
     items: List[SaleItemCreate]
+    discount_amount: Optional[float] = 0.0
 
 class SaleInDB(BaseModel):
     id: int
@@ -61,3 +71,4 @@ class SaleInDB(BaseModel):
 
 class Sale(SaleInDB):
     items: List[SaleItem] = []
+    customer: Optional[CustomerInfo] = None

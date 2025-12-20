@@ -3,20 +3,24 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addItem, clearCart, removeItem, updateQuantity, selectCartTotal } from '../redux/slices/cartSlice';
 import { fetchProductByBarcode, fetchProducts } from '../redux/slices/productsSlice';
 import api from '../utils/api';
+import CustomerForm from '../components/CustomerForm';
 import '../styles/POSPage.css';
 
 function POSPage() {
   const dispatch = useDispatch();
   const { items } = useSelector((state) => state.cart);
   const { subtotal, taxAmount, total, itemCount } = useSelector(selectCartTotal);
-  const { products } = useSelector((state) => state.products);
+  const { items: products } = useSelector((state) => state.products);
   const [barcode, setBarcode] = useState('');
   const [processing, setProcessing] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [paymentMethod, setPaymentMethod] = useState('cash');
   const [customerPhone, setCustomerPhone] = useState('');
-  const [discount, setDiscount] = useState(0);
+  const [discount, setDiscount] = useState('');
+  const [customerVerified, setCustomerVerified] = useState(null); // null, 'verified', 'not-found', 'checking'
+  const [customerData, setCustomerData] = useState(null);
+  const [showCustomerModal, setShowCustomerModal] = useState(false);
   const barcodeInputRef = useRef(null);
 
   useEffect(() => {
@@ -25,9 +29,56 @@ function POSPage() {
   }, [dispatch]);
 
   useEffect(() => {
-    // Auto-focus barcode input
-    barcodeInputRef.current?.focus();
+    // Auto-focus barcode input without scrolling
+    barcodeInputRef.current?.focus({ preventScroll: true });
   }, [items]);
+
+  // Live customer phone validation
+  useEffect(() => {
+    const validateCustomerPhone = async () => {
+      // Reset if empty
+      if (!customerPhone.trim()) {
+        setCustomerVerified(null);
+        setCustomerData(null);
+        return;
+      }
+
+      // Only validate if 10+ digits
+      const phoneDigits = customerPhone.replace(/\D/g, '');
+      if (phoneDigits.length < 10) {
+        setCustomerVerified(null);
+        setCustomerData(null);
+        return;
+      }
+
+      // Check if customer exists
+      setCustomerVerified('checking');
+      try {
+        const response = await api.get('/customers', {
+          params: { phone: customerPhone }
+        });
+        
+        // Find customer with matching phone
+        const customer = response.data.find(c => c.phone === customerPhone);
+        
+        if (customer) {
+          setCustomerVerified('verified');
+          setCustomerData(customer);
+        } else {
+          setCustomerVerified('not-found');
+          setCustomerData(null);
+        }
+      } catch (error) {
+        console.error('Error checking customer:', error);
+        setCustomerVerified('not-found');
+        setCustomerData(null);
+      }
+    };
+
+    // Debounce the validation
+    const timeoutId = setTimeout(validateCustomerPhone, 500);
+    return () => clearTimeout(timeoutId);
+  }, [customerPhone]);
 
   const handleBarcodeSubmit = async (e) => {
     e.preventDefault();
@@ -59,15 +110,17 @@ function POSPage() {
           discount: item.discount || 0,
         })),
         payment_method: paymentMethod,
-        customer_phone: customerPhone || null,
-        discount_amount: discount,
+        customer_id: customerData?.id || null,
+        discount_amount: parseFloat(discount) || 0,
       };
 
       const response = await api.post('/sales', saleData);
       alert(`Sale completed! Invoice: ${response.data.invoice_number}`);
       dispatch(clearCart());
       setCustomerPhone('');
-      setDiscount(0);
+      setCustomerData(null);
+      setCustomerVerified(null);
+      setDiscount('');
       setPaymentMethod('cash');
     } catch (error) {
       alert('Sale failed: ' + (error.response?.data?.detail || error.message));
@@ -81,21 +134,36 @@ function POSPage() {
       alert('Product out of stock');
       return;
     }
-    dispatch(addItem({
-      product_id: product.id,
-      product_name: product.name,
-      unit_price: product.selling_price,
-      barcode: product.barcode,
-      quantity: 1,
-      gst_rate: product.gst_rate || 0,
-    }));
+    dispatch(addItem(product));
+  };
+
+  const handleAddCustomer = async (formData) => {
+    try {
+      const response = await api.post('/customers', formData);
+      setCustomerData(response.data);
+      setCustomerVerified('verified');
+      setCustomerPhone(formData.phone);
+      setShowCustomerModal(false);
+      alert('Customer added successfully!');
+    } catch (error) {
+      alert('Failed to add customer: ' + (error.response?.data?.detail || error.message));
+    }
+  };
+
+  const handleOpenCustomerModal = () => {
+    setShowCustomerModal(true);
   };
 
   const handleQuantityChange = (itemId, newQuantity) => {
-    if (newQuantity <= 0) {
+    const qty = parseInt(newQuantity);
+    if (newQuantity === '' || isNaN(qty)) {
+      // Allow empty field temporarily for editing
+      return;
+    }
+    if (qty <= 0) {
       dispatch(removeItem(itemId));
     } else {
-      dispatch(updateQuantity({ id: itemId, quantity: parseInt(newQuantity) }));
+      dispatch(updateQuantity({ id: itemId, quantity: qty }));
     }
   };
 
@@ -218,13 +286,38 @@ function POSPage() {
           
           <div className="customer-section">
             <label>Customer Phone (Optional)</label>
-            <input
-              type="tel"
-              value={customerPhone}
-              onChange={(e) => setCustomerPhone(e.target.value)}
-              placeholder="Enter phone number"
-              className="customer-input"
-            />
+            <div className="customer-phone-wrapper">
+              <input
+                type="tel"
+                value={customerPhone}
+                onChange={(e) => setCustomerPhone(e.target.value)}
+                placeholder="Enter phone number"
+                className={`customer-input ${
+                  customerVerified === 'verified' ? 'verified' : 
+                  customerVerified === 'not-found' ? 'not-found' : ''
+                }`}
+              />
+              {customerVerified === 'checking' && (
+                <span className="validation-indicator checking">Checking...</span>
+              )}
+              {customerVerified === 'verified' && (
+                <span className="validation-indicator verified">
+                  ✓ Verified - {customerData?.name}
+                </span>
+              )}
+              {customerVerified === 'not-found' && (
+                <div className="validation-indicator not-found">
+                  ✗ Not found
+                  <button 
+                    type="button"
+                    onClick={handleOpenCustomerModal}
+                    className="add-customer-btn"
+                  >
+                    Add Customer
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
 
           <div className="payment-method-section">
@@ -247,7 +340,7 @@ function POSPage() {
               type="number"
               min="0"
               value={discount}
-              onChange={(e) => setDiscount(parseFloat(e.target.value) || 0)}
+              onChange={(e) => setDiscount(e.target.value)}
               placeholder="Enter discount amount"
               className="discount-input"
             />
@@ -265,7 +358,7 @@ function POSPage() {
           
           <div className="summary-row">
             <span>Discount:</span>
-            <span>-₹{discount.toFixed(2)}</span>
+            <span>-₹{(parseFloat(discount) || 0).toFixed(2)}</span>
           </div>
           
           <div className="summary-row">
@@ -275,7 +368,7 @@ function POSPage() {
           
           <div className="summary-row total">
             <span>Total:</span>
-            <span>₹{(total - discount).toFixed(2)}</span>
+            <span>₹{(total - (parseFloat(discount) || 0)).toFixed(2)}</span>
           </div>
 
           <button 
@@ -295,6 +388,28 @@ function POSPage() {
           </button>
         </div>
       </div>
+
+      {/* Customer Add Modal */}
+      {showCustomerModal && (
+        <div className="modal-overlay" onClick={() => setShowCustomerModal(false)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h3>Add New Customer</h3>
+              <button 
+                className="modal-close"
+                onClick={() => setShowCustomerModal(false)}
+              >
+                ✕
+              </button>
+            </div>
+            <CustomerForm
+              customer={{ phone: customerPhone }}
+              onSubmit={handleAddCustomer}
+              onCancel={() => setShowCustomerModal(false)}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

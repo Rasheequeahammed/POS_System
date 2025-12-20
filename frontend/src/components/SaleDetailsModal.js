@@ -27,7 +27,7 @@ const SaleDetailsModal = ({ sale, onClose }) => {
           </div>
           <div className="info-row">
             <span className="label">Customer:</span>
-            <span className="value">{sale.customer_name || 'Walk-in Customer'}</span>
+            <span className="value">{sale.customer?.name || 'Walk-in Customer'}</span>
           </div>
           <div className="info-row">
             <span className="label">Payment Method:</span>
@@ -72,10 +72,12 @@ const SaleDetailsModal = ({ sale, onClose }) => {
             <span>Subtotal:</span>
             <span>₹{parseFloat(sale.subtotal || 0).toFixed(2)}</span>
           </div>
-          <div className="total-row">
-            <span>Discount:</span>
-            <span>-₹{parseFloat(sale.discount_amount || 0).toFixed(2)}</span>
-          </div>
+          {parseFloat(sale.discount_amount || 0) > 0 && (
+            <div className="total-row">
+              <span>Discount:</span>
+              <span>-₹{parseFloat(sale.discount_amount || 0).toFixed(2)}</span>
+            </div>
+          )}
           <div className="total-row">
             <span>GST:</span>
             <span>₹{parseFloat(sale.tax_amount || 0).toFixed(2)}</span>

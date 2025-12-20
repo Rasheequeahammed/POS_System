@@ -132,6 +132,7 @@ function Navbar() {
 
   // Dropdown menu configurations
   const salesDropdown = [
+    { path: '/sales', label: 'Sales History', isActive: location.pathname === '/sales' },
     { path: '/customers', label: 'Customers', isActive: location.pathname === '/customers' }
   ];
 

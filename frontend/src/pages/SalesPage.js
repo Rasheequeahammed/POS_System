@@ -138,7 +138,7 @@ const SalesPage = () => {
                 <tr key={sale.id}>
                   <td className="invoice-number">#{sale.id}</td>
                   <td>{formatDate(sale.sale_date)}</td>
-                  <td>{sale.customer_name || 'Walk-in'}</td>
+                  <td>{sale.customer?.name || 'Walk-in'}</td>
                   <td>{sale.items?.length || 0}</td>
                   <td>₹{parseFloat(sale.subtotal || 0).toFixed(2)}</td>
                   <td>₹{parseFloat(sale.tax_amount || 0).toFixed(2)}</td>

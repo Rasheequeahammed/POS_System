@@ -1,6 +1,6 @@
 .pos-container {
   display: flex;
-  height: calc(100vh - 60px);
+  min-height: calc(100vh - 60px);
   background: #f5f5f5;
 }
 
@@ -8,7 +8,7 @@
   flex: 2;
   display: flex;
   flex-direction: column;
-  padding: 20px;
+  padding: 10px;
   background: white;
   margin: 10px;
   border-radius: 10px;
@@ -141,7 +141,6 @@
 
 .cart-items {
   flex: 1;
-  overflow-y: auto;
 }
 
 .empty-cart {
@@ -303,4 +302,120 @@
 .clear-button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+/* Customer Phone Validation Styles */
+.customer-phone-wrapper {
+  position: relative;
+}
+
+.customer-input.verified {
+  border-color: #10b981;
+  background-color: #f0fdf4;
+}
+
+.customer-input.not-found {
+  border-color: #f59e0b;
+  background-color: #fffbeb;
+}
+
+.validation-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  font-size: 14px;
+  padding: 6px 10px;
+  border-radius: 4px;
+}
+
+.validation-indicator.checking {
+  color: #3b82f6;
+  background-color: #eff6ff;
+}
+
+.validation-indicator.verified {
+  color: #10b981;
+  background-color: #f0fdf4;
+  font-weight: 500;
+}
+
+.validation-indicator.not-found {
+  color: #f59e0b;
+  background-color: #fffbeb;
+  justify-content: space-between;
+}
+
+.add-customer-btn {
+  padding: 4px 12px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.add-customer-btn:hover {
+  transform: translateY(-1px);
+}
+
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  padding: 0;
+  border-radius: 10px;
+  max-width: 500px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.modal-header h3 {
+  margin: 0;
+  color: #333;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #999;
+  cursor: pointer;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.3s;
+}
+
+.modal-close:hover {
+  background: #f5f5f5;
+  color: #333;
 }

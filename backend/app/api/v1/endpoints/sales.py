@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 from sqlalchemy import func
-from typing import List
+from typing import List, Optional
 from datetime import datetime
 from app.database.session import get_db
 from app.models.sale import Sale, SaleItem
@@ -87,7 +87,7 @@ async def create_sale(
             })
         
         # Calculate final total
-        discount_amount = sale_data.notes and "DISCOUNT:" in sale_data.notes or 0.0
+        discount_amount = float(sale_data.discount_amount or 0.0)
         total_amount = subtotal - discount_amount + tax_amount
         
         # Create sale record
@@ -152,13 +152,39 @@ async def create_sale(
 async def get_sales(
     skip: int = 0,
     limit: int = 100,
+    start_date: Optional[str] = None,
+    end_date: Optional[str] = None,
+    payment_method: Optional[str] = None,
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ):
     """
-    Get all sales
+    Get all sales with optional filters
     """
-    sales = db.query(Sale).order_by(Sale.sale_date.desc()).offset(skip).limit(limit).all()
+    query = db.query(Sale).options(joinedload(Sale.customer), joinedload(Sale.items))
+    
+    # Apply date filters
+    if start_date:
+        try:
+            start_datetime = datetime.strptime(start_date, "%Y-%m-%d")
+            query = query.filter(Sale.sale_date >= start_datetime)
+        except ValueError:
+            pass
+    
+    if end_date:
+        try:
+            end_datetime = datetime.strptime(end_date, "%Y-%m-%d")
+            # Add one day to include the end date
+            end_datetime = end_datetime.replace(hour=23, minute=59, second=59)
+            query = query.filter(Sale.sale_date <= end_datetime)
+        except ValueError:
+            pass
+    
+    # Apply payment method filter
+    if payment_method:
+        query = query.filter(Sale.payment_method == payment_method.lower())
+    
+    sales = query.order_by(Sale.sale_date.desc()).offset(skip).limit(limit).all()
     return sales
 
 
