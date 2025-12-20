@@ -1,19 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchDashboardStats, fetchSalesChart } from '../redux/slices/dashboardSlice';
+import { fetchTopProducts, fetchRevenueByCategory } from '../redux/slices/analyticsSlice';
 import SalesChart from '../components/SalesChart';
 import LowStockAlerts from '../components/LowStockAlerts';
 import RecentSales from '../components/RecentSales';
+import TopProductsTable from '../components/TopProductsTable';
+import CategoryRevenueChart from '../components/CategoryRevenueChart';
 import '../styles/DashboardPage.css';
 
 function DashboardPage() {
   const dispatch = useDispatch();
   const { stats, loading, error } = useSelector((state) => state.dashboard);
+  const { topProducts, revenueByCategory } = useSelector((state) => state.analytics);
   const [chartPeriod, setChartPeriod] = useState('week');
 
   useEffect(() => {
     dispatch(fetchDashboardStats());
     dispatch(fetchSalesChart('week'));
+    
+    // Fetch analytics data for last 30 days
+    const endDate = new Date().toISOString().split('T')[0];
+    const startDate = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+    
+    dispatch(fetchTopProducts({ startDate, endDate, limit: 10 }));
+    dispatch(fetchRevenueByCategory({ startDate, endDate }));
   }, [dispatch]);
 
   const handlePeriodChange = (period) => {
@@ -77,6 +88,17 @@ function DashboardPage() {
 
         <div className="dashboard-section">
           <LowStockAlerts />
+        </div>
+      </div>
+
+      {/* Category Revenue & Top Products */}
+      <div className="dashboard-grid">
+        <div className="dashboard-section">
+          <CategoryRevenueChart revenueByCategory={revenueByCategory} />
+        </div>
+
+        <div className="dashboard-section">
+          <TopProductsTable topProducts={topProducts} />
         </div>
       </div>
 

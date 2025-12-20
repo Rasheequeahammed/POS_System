@@ -41,7 +41,7 @@ function TopProductsTable({ topProducts }) {
             </tr>
           </thead>
           <tbody>
-            {topProducts.map((product, index) => {
+            {topProducts.slice(0, 3).map((product, index) => {
               const contribution = totalRevenue > 0 ? (product.revenue / totalRevenue) * 100 : 0;
               return (
                 <tr key={index}>

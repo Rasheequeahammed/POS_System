@@ -172,8 +172,8 @@ def get_top_products(
 ):
     """Get top selling products"""
     try:
-        start = datetime.fromisoformat(start_date)
-        end = datetime.fromisoformat(end_date)
+        start = datetime.fromisoformat(start_date).replace(hour=0, minute=0, second=0)
+        end = datetime.fromisoformat(end_date).replace(hour=23, minute=59, second=59)
     except ValueError:
         raise HTTPException(status_code=400, detail="Invalid date format")
 
@@ -287,8 +287,8 @@ def get_revenue_by_category(
 ):
     """Get revenue breakdown by category"""
     try:
-        start = datetime.fromisoformat(start_date)
-        end = datetime.fromisoformat(end_date)
+        start = datetime.fromisoformat(start_date).replace(hour=0, minute=0, second=0)
+        end = datetime.fromisoformat(end_date).replace(hour=23, minute=59, second=59)
     except ValueError:
         raise HTTPException(status_code=400, detail="Invalid date format")
 
